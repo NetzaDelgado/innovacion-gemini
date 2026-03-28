@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Carteles</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-800 font-sans p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+        
+        <!-- Header -->
+        <header class="mb-8 text-center md:text-left">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2 flex items-center justify-center md:justify-start gap-3">
+                <i data-lucide="calendar" class="text-blue-600 w-9 h-9"></i>
+                Agenda de Evaluación de Carteles
+            </h1>
+            <p class="text-slate-500">Horarios organizados por día, identificando tiempos libres.</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="flex bg-white rounded-xl shadow-sm p-1 mb-8 overflow-x-auto border border-slate-200" id="tabs-container">
+            <button
+                id="tab-2026-03-26"
+                onclick="setActiveTab('2026-03-26')"
+                class="flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap bg-blue-600 text-white shadow-md"
+            >
+                Jueves 26 de Marzo, 2026
+            </button>
+            <button
+                id="tab-2026-03-27"
+                onclick="setActiveTab('2026-03-27')"
+                class="flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap text-slate-600 hover:bg-slate-100"
+            >
+                Viernes 27 de Marzo, 2026
+            </button>
+        </div>
+
+        <!-- Timeline View -->
+        <div class="relative border-l-2 border-slate-200 ml-4 md:ml-6 pl-6 md:pl-8 space-y-6 pb-12" id="timeline-container">
+            <!-- Timeline items will be injected here by JavaScript -->
+        </div>
+
+    </div>
+
+    <script>
+        const scheduleData = {
+            "2026-03-26": [
+                { time: "08:15", type: "event", title: "Asociación de niveles de vitamina D sérica y el riesgo de ingreso a la UTIP", category: "Investigación Clínica", cartel: "1" },
+                { time: "08:30", type: "gap", title: "Tiempo Libre", duration: "1 hora (60 min)" },
+                { time: "09:30", type: "event", title: "Evaluación de esquemas de tratamiento con una y dos bolsas en niños con cetoacidosis diabética en Urgencias Pediatría...", category: "Investigación Clínica", cartel: "17" },
+                { time: "09:45", type: "gap", title: "Tiempo Libre", duration: "30 min" },
+                { time: "10:15", type: "event", title: "Factores ambientales y microbiota: Impacto del consumo calórico en el estado nutricional durante la infancia temprana", category: "Trabajo con diseño metodológico (pregrado)", cartel: "9" },
+                { time: "10:30", type: "event", title: "Evaluación de la variante rs1524107 del gen IL-6 en población pediátrica con exposición ambiental renal", category: "Trabajo con diseño metodológico (pregrado)", cartel: "9" },
+                { time: "10:45", type: "gap", title: "Receso Extendido", duration: "3 horas y 45 min" },
+                { time: "14:30", type: "event", title: "Comparación del resultado del abordaje quirúrgico de incisión abdominal línea media vs incisión transversa en neonatos...", category: "Investigación Clínica", cartel: "3" },
+                { time: "14:45", type: "event", title: "Factores de riesgo maternos asociados al desarrollo de gastrosquisis en recién nacidos vivos en el Hospital Civil de Guadalajara...", category: "Trabajo con diseño metodológico (pregrado)", cartel: "3" },
+                { time: "15:00", type: "event", title: "SÍNDROME DE HETEROTAXIA VISCERAL VARIEDAD ASPLENIA CON ISOMERISMO DERECHO: EL ROMPECABEZAS DE LA LATERALIDAD", category: "Casos Clinicos (pregrado)", cartel: "1" },
+                { time: "15:15", type: "event", title: "Facomatosis pigmentovascularis en lactante: la piel como clave diagnóstica de compromiso neurológico y ocular", category: "Casos Clinicos (pregrado)", cartel: "1" }
+            ],
+            "2026-03-27": [
+                { time: "08:45", type: "event", title: "Síndrome pierde sal secundario a excéresis de astrocitoma de bajo grado de la vía óptica", category: "Casos Clinicos (pregrado)", cartel: "23" },
+                { time: "09:00", type: "event", title: "Presentación de caso clínico: hiperplasia suprarrenal congénita por deficiencia de 21-hidroxilasa en paciente neonato", category: "Casos Clinicos (pregrado)", cartel: "24" },
+                { time: "09:15", type: "event", title: "Eritema multiforme mayor secundario a infección por Mycoplasma pneumoniae en paciente pediátrica: reporte de caso.", category: "Casos Clinicos (pregrado)", cartel: "26" },
+                { time: "09:30", type: "gap", title: "Tiempo Libre / Receso", duration: "1 hora y 15 min" },
+                { time: "10:45", type: "event", title: "Intoxicación mercurial por homeopatía en una lactante: El riesgo de las diluciones metálicas en pediatría", category: "Casos Clínicos", cartel: "8" },
+                { time: "11:00", type: "event", title: "LESIÓN DEL NERVIO RADIAL ASOCIADA A FRACTURA DE MONTEGGIA EN PACIENTE PEDIÁTRICO: REPORTE DE UN CASO", category: "Casos Clínicos", cartel: "8" },
+                { time: "11:15", type: "event", title: "GLUCOGENOSIS TIPO 1B PRESENTACIÓN CLÍNICA Y ABORDAJE DIAGNÓSTICO EN UN LACTANTE: REPORTE DE CASO", category: "Casos Clinicos (pregrado)", cartel: "27" },
+                { time: "11:30", type: "event", title: "Epididimitis como manifestación de vasculitis por IgA en paciente pediátrico.", category: "Casos Clinicos (pregrado)", cartel: "27" },
+                { time: "11:45", type: "event", title: "SUPERPOSICIÓN AUTOINMUNE EN PEDIATRÍA: EVOLUCIÓN DE ARTRITIS IDIOPÁTICA JUVENIL A LUPUS ERITEMATOSO SISTÉMICO: A propósito de un caso", category: "Casos Clinicos (pregrado)", cartel: "27" }
+            ]
+        };
+
+        const getCategoryColor = (category) => {
+            if (category.includes('Investigación')) return 'border-indigo-500 text-indigo-700 bg-indigo-50';
+            if (category.includes('Trabajo con diseño')) return 'border-emerald-500 text-emerald-700 bg-emerald-50';
+            if (category.includes('pregrado')) return 'border-amber-500 text-amber-700 bg-amber-50';
+            return 'border-sky-500 text-sky-700 bg-sky-50';
+        };
+
+        function setActiveTab(date) {
+            // Update Tab Styles
+            const tabs = ['2026-03-26', '2026-03-27'];
+            tabs.forEach(tab => {
+                const btn = document.getElementById(`tab-${tab}`);
+                if (tab === date) {
+                    btn.className = "flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap bg-blue-600 text-white shadow-md";
+                } else {
+                    btn.className = "flex-1 py-3 px-4 text-sm font-semibold rounded-lg transition-colors whitespace-nowrap text-slate-600 hover:bg-slate-100";
+                }
+            });
+
+            // Render Timeline
+            renderTimeline(date);
+        }
+
+        function renderTimeline(date) {
+            const container = document.getElementById('timeline-container');
+            const items = scheduleData[date];
+            let html = '';
+
+            items.forEach(item => {
+                if (item.type === 'event') {
+                    const colorClasses = getCategoryColor(item.category);
+                    const borderColor = colorClasses.split(' ')[0];
+                    // Combine background and text colors for the tag
+                    const tagColors = colorClasses.split(' ').slice(1).join(' ');
+
+                    html += `
+                    <div class="relative">
+                        <!-- Timeline Dot -->
+                        <div class="absolute -left-[35px] md:-left-[43px] top-4 rounded-full border-4 border-slate-50 w-5 h-5 md:w-6 md:h-6 flex items-center justify-center bg-blue-500"></div>
+
+                        <!-- Content Card -->
+                        <div class="bg-white rounded-xl p-5 shadow-sm border-l-4 border hover:shadow-md transition-shadow ${borderColor} border-y-slate-100 border-r-slate-100">
+                            
+                            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-3">
+                                <div class="flex items-center gap-2 text-blue-600 font-bold text-lg bg-blue-50 px-3 py-1 rounded-md w-max">
+                                    <i data-lucide="clock" class="w-[18px] h-[18px]"></i>
+                                    ${item.time}
+                                </div>
+                                
+                                <div class="flex items-center gap-2 bg-slate-800 text-white px-3 py-1 rounded-full text-xs font-bold shrink-0 w-max">
+                                    <i data-lucide="map-pin" class="w-[14px] h-[14px]"></i>
+                                    Cartel ${item.cartel}
+                                </div>
+                            </div>
+
+                            <h3 class="text-lg font-bold text-slate-800 mb-3 leading-snug">
+                                ${item.title}
+                            </h3>
+
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold ${tagColors}">
+                                    <i data-lucide="tag" class="w-[12px] h-[12px]"></i>
+                                    ${item.category}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                } else {
+                    // Gap Card
+                    html += `
+                    <div class="relative">
+                        <!-- Timeline Dot -->
+                        <div class="absolute -left-[35px] md:-left-[43px] top-4 rounded-full border-4 border-slate-50 w-5 h-5 md:w-6 md:h-6 flex items-center justify-center bg-slate-300"></div>
+
+                        <!-- Content Card -->
+                        <div class="bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl p-4 flex flex-col items-center justify-center text-slate-500 relative">
+                            <div class="flex items-center gap-2 font-semibold">
+                                <i data-lucide="coffee" class="text-slate-400 w-5 h-5"></i>
+                                ${item.title}
+                            </div>
+                            <span class="text-sm mt-1 text-slate-400 font-medium">
+                                Duración: ${item.duration}
+                            </span>
+                        </div>
+                    </div>
+                    `;
+                }
+            });
+
+            container.innerHTML = html;
+            
+            // Re-initialize Lucide icons for the newly injected HTML
+            lucide.createIcons();
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize static icons first (header)
+            lucide.createIcons();
+            // Load the default tab
+            setActiveTab('2026-03-26');
+        });
+    </script>
+</body>
+</html>
